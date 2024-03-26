@@ -1,0 +1,23 @@
+{
+  "name": "norlingbot",
+  "version": "1.0.0",
+  "description": "Norling discord bot made by @Aruallik",
+  "main": "./src/bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@discordjs/rest": "^1.0.1",
+    "chalk": "^4.1.2",
+    "discord-api-types": "^0.37.1",
+    "discord.js": "^14.1.2",
+    "dotenv": "^16.0.1",
+    "moment": "^2.29.4",
+    "mysql": "^2.18.1",
+    "oldschooljs": "^2.1.60"
+  }
+}
