@@ -36,6 +36,21 @@ function topMaps(connection, resolve, message) {
     connection.release();
 }
 
+function checkDuplicateMessage(connection, message) {
+    return new Promise((resolve, reject) => {
+        connection.query('SELECT message_id FROM posts WHERE message_id = ?;', [message.id], async function (error, results, fields) {
+            if (error) {
+                console.error(error);
+                reject(error);
+            } else {
+                resolve(results);
+            }
+        });
+    });
+}
+
+
 module.exports.insertPost = insertPost;
 module.exports.topPosts = topPosts;
 module.exports.topMaps = topMaps;
+module.exports.checkDuplicateMessage = checkDuplicateMessage;

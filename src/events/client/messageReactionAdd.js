@@ -20,8 +20,23 @@ module.exports = {
             interaction.emoji.id === process.env.APPROVE_GUILD_EMOJI
         ) {
             db(function (error, connection) {
-                if (error) console.error(error);
-                queries.insertPost(connection, interaction.message, user, threadId, mapName)
+                if (error) {
+                    console.error(error, 'error');
+                } else {
+                    const results = queries.checkDuplicateMessage(connection, interaction.message);
+                    results.then(results => {
+                        if (results.length === 0) {
+                            db(function (error, connection) {
+                                if (error) console.error(error);
+                                queries.insertPost(connection, interaction.message, user, threadId, mapName)
+                            });
+                        }
+                    }).catch(error => {
+                        console.error(error);
+                    }).finally(() => {
+                        connection.release();
+                    });
+                }
             });
         }
     }
