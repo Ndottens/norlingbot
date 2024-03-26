@@ -1,7 +1,7 @@
 const db = require('../../database/database')
 const queries = require('../../database/queries');
 const threads = require('../../helpers/posts/threads');
-const { PermissionsBitField } = require('discord.js');
+const { PermissionsBitField, ActionRowBuilder, EmbedBuilder} = require('discord.js');
 
 
 module.exports = {
@@ -12,6 +12,8 @@ module.exports = {
 
         const guild = interaction.message.guild;
         const member = await guild.members.fetch(user.id);
+
+        const channel = guild.channels.cache.get(process.env.ADMIN_LOG_CHANNEL_ID);
 
         if (
             member.permissions.has(PermissionsBitField.Flags.Administrator) &&
@@ -24,11 +26,27 @@ module.exports = {
                     console.error(error, 'error');
                 } else {
                     const results = queries.checkDuplicateMessage(connection, interaction.message);
-                    results.then(results => {
+                    results.then(async results => {
                         if (results.length === 0) {
                             db(function (error, connection) {
                                 if (error) console.error(error);
                                 queries.insertPost(connection, interaction.message, user, threadId, mapName)
+                            });
+
+
+                            const embed = new EmbedBuilder()
+                                .setTitle('NorlingBOT')
+                                .setDescription(`Inserted new post ${interaction.message.url}`)
+                                .setColor(0x18e1ee)
+                                .setTimestamp(Date.now())
+                                .setFooter({
+                                    iconURL: client.user.displayAvatarURL(),
+                                    text: client.user.username
+                                })
+
+                            await channel.send({
+                                embeds: [embed],
+                                ephemeral: false
                             });
                         }
                     }).catch(error => {
