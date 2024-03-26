@@ -1,9 +1,9 @@
 const chalk = require("chalk");
 
-function insertPost(connection, message, client) {
+function insertPost(connection, message, user, threadId, mapName) {
     const post = {
-        user_id: '',
-        map_id: ''
+        user_id: user.id,
+        map_id: threadId
     };
 
     connection.query('INSERT INTO posts SET ?', post, async function (error, results, fields) {
@@ -12,7 +12,29 @@ function insertPost(connection, message, client) {
 
     connection.release();
 
-    console.log(chalk.green(`[Database status] - inserted post from: ${post.user_id}`))
+    console.log(chalk.green(`[Database status] - inserted post from: ${mapName}`))
+}
+
+function topPosts(connection, resolve, message) {
+    connection.query('SELECT user_id,COUNT(*) as total FROM posts GROUP BY user_id ORDER BY total DESC  LIMIT 10;', 'posts', async function (error, results, fields) {
+        if (error) console.error(error);
+        resolve(results)
+        await message.react('🏆');
+    });
+
+    connection.release();
+}
+
+function topMaps(connection, resolve, message) {
+    connection.query('SELECT map_id,COUNT(*) as total FROM posts GROUP BY map_id ORDER BY total DESC  LIMIT 10;', 'posts', async function (error, results, fields) {
+        if (error) console.error(error);
+        resolve(results)
+        await message.react('🏆');
+    });
+
+    connection.release();
 }
 
 module.exports.insertPost = insertPost;
+module.exports.topPosts = topPosts;
+module.exports.topMaps = topMaps;
