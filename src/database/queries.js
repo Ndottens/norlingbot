@@ -1,6 +1,8 @@
 const chalk = require("chalk");
 
 function insertPost(connection, message, user, threadId, mapName) {
+
+    console.log(message.id)
     const post = {
         user_id: user.id,
         map_id: threadId,
