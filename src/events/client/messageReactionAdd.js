@@ -24,5 +24,7 @@ module.exports = {
                 queries.insertPost(connection, interaction.message, user, threadId, mapName)
             });
         }
+
+        await interaction.react('🤖');
     }
 }

@@ -27,7 +27,6 @@ module.exports = {
 
         if (results.length > 0) {
             results.forEach((result, index) => {
-                console.log(result.map_id)
                 resultsMessage.push(`${leaderboard[index]} <#${result.map_id}> - total: ${result.total} \n`)
             });
 

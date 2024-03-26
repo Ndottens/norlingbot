@@ -3,7 +3,8 @@ const chalk = require("chalk");
 function insertPost(connection, message, user, threadId, mapName) {
     const post = {
         user_id: user.id,
-        map_id: threadId
+        map_id: threadId,
+        message_id: message.id
     };
 
     connection.query('INSERT INTO posts SET ?', post, async function (error, results, fields) {
