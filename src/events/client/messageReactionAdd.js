@@ -36,7 +36,7 @@ module.exports = {
 
                             const embed = new EmbedBuilder()
                                 .setTitle('NorlingBOT')
-                                .setDescription(`<@${user.id}> approved new post in: ${interaction.message.url}`)
+                                .setDescription(`<@${user.id}> approved a new post in: ${interaction.message.url} \n Author: <@${interaction.message.author.id}>`)
                                 .setColor(0x18e1ee)
                                 .setTimestamp(Date.now())
                                 .setFooter({
