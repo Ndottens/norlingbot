@@ -3,7 +3,6 @@ const queries = require('../../database/queries');
 const threads = require('../../helpers/posts/threads');
 const { PermissionsBitField, ActionRowBuilder, EmbedBuilder} = require('discord.js');
 
-
 module.exports = {
     name: 'messageReactionAdd',
     async execute(interaction, user, client) {
@@ -33,10 +32,26 @@ module.exports = {
                                 queries.insertPost(connection, interaction.message, user, threadId, mapName)
                             });
 
-
                             const embed = new EmbedBuilder()
-                                .setTitle('NorlingBOT')
-                                .setDescription(`<@${user.id}> approved a new post in: ${interaction.message.url} \n Author: <@${interaction.message.author.id}>`)
+                                .setTitle('NorlingBOT - Active posts logger')
+                                .setDescription('A new post has been approved.')
+                                .addFields(
+                                    {
+                                        name: 'Channel:',
+                                        value: `${interaction.message.url}`,
+                                        inline: true
+                                    },
+                                    {
+                                        name: 'Author:',
+                                        value: `<@${interaction.message.author.id}>`,
+                                        inline: true
+                                    },
+                                    {
+                                        name: 'Approved by:',
+                                        value: `<@${user.id}>`,
+                                        inline: false
+                                    }
+                                )
                                 .setColor(0x18e1ee)
                                 .setTimestamp(Date.now())
                                 .setFooter({

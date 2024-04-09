@@ -49,7 +49,20 @@ function checkDuplicateMessage(connection, message) {
     });
 }
 
+function getTotalUserPost(connection, userId) {
+    return new Promise((resolve, reject) => {
+        connection.query('SELECT user_id, COUNT(*) as total FROM posts WHERE user_id = ?;', [userId], async function (error, results, fields) {
+            if (error) {
+                console.error(error);
+                reject(error);
+            }
+            resolve(results);
+            connection.release();
+        });
+    });
+}
 
+module.exports.getTotalUserPost = getTotalUserPost;
 module.exports.insertPost = insertPost;
 module.exports.topPosts = topPosts;
 module.exports.topMaps = topMaps;
