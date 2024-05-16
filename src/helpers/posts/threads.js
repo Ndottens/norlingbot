@@ -14,6 +14,6 @@ module.exports = Object.freeze({
     akthuba_river: process.env.AKTHUBA_RIVER_THREAD_ID,
     lower_tunguska_river: process.env.LOWER_TUNGUSKA_RIVER_THREAD_ID,
     yama_river: process.env.YAMA_RIVER_THREAD_ID,
-    norwegian_sea: process.env.NORWEGIAN_SEA_THREAD_ID
-
+    norwegian_sea: process.env.NORWEGIAN_SEA_THREAD_ID,
+    copper_lake: process.env.COPPER_LAKE_THREAD_ID
 })
